@@ -96,6 +96,11 @@ def question_1(message):
         bot.send_message(message.from_user.id,
                          "Возвращайся когда будешь готов! Чтобы запустить бота заново напиши /start",
                          reply_markup=ReplyKeyboardRemove())
+    else:
+        new_message = bot.send_message(message.from_user.id,
+                                       'Я Вас не понимаю. Отвечаете только "Да" и "Нет"',
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, start)
 
 
 def question_2(message):
@@ -105,16 +110,26 @@ def question_2(message):
         rating["5"] = -1
         rating["8"] = -1
         rating["10"] = -1
-
+        new_message = bot.send_message(message.from_user.id,
+                                       "2) У меня есть дети или в ближайшее время планирую завести",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_3)
+        print(rating)
     elif message.text == "Нет":
         if rating["2"] != -1:
             rating["2"] += 1
         if rating["4"] != -1:
             rating["4"] += 1
-
-    new_message = bot.send_message(message.from_user.id,
-                                   "2) У меня есть дети или в ближайшее время планирую завести", reply_markup=markup)
-    bot.register_next_step_handler(new_message, question_3)
+        new_message = bot.send_message(message.from_user.id,
+                                       "2) У меня есть дети или в ближайшее время планирую завести",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_3)
+        print(rating)
+    else:
+        new_message = bot.send_message(message.from_user.id,
+                                       'Я Вас не понимаю. Отвечаете только "Да" и "Нет"',
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_2)
 
 
 def question_3(message):
@@ -123,6 +138,9 @@ def question_3(message):
         rating["4"] = -1
         rating["8"] = -1
 
+        new_message = bot.send_message(message.from_user.id,
+                                       "3) У меня есть маленькие животные", reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_4)
     elif message.text == "Нет":
         if rating["1"] != -1:
             rating["1"] += 1
@@ -136,9 +154,15 @@ def question_3(message):
         if rating["9"] != -1:
             rating["9"] += 1
 
-    new_message = bot.send_message(message.from_user.id,
-                                   "3) У меня есть маленькие животные", reply_markup=markup)
-    bot.register_next_step_handler(new_message, question_4)
+        new_message = bot.send_message(message.from_user.id,
+                                       "3) У меня есть маленькие животные", reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_4)
+
+    else:
+        new_message = bot.send_message(message.from_user.id,
+                                       'Я Вас не понимаю. Отвечаете только "Да" и "Нет"',
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_3)
 
 
 def question_4(message):
@@ -148,16 +172,29 @@ def question_4(message):
         rating["7"] = -1
         rating["10"] = -1
 
+        new_message = bot.send_message(message.from_user.id,
+                                       "4) Я не готов(а) отвлекаться от важных дел на собаку, она должна уметь занять себя,"
+                                       " если я занят(а)",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_5)
+
     elif message.text == "Нет":
         if rating["3"] != -1:
             rating["3"] += 1
         if rating["9"] != -1:
             rating["9"] += 1
-    new_message = bot.send_message(message.from_user.id,
-                                   "4) Я не готов(а) отвлекаться от важных дел на собаку, она должна уметь занять себя,"
-                                   " если я занят(а)",
-                                   reply_markup=markup)
-    bot.register_next_step_handler(new_message, question_5)
+
+        new_message = bot.send_message(message.from_user.id,
+                                       "4) Я не готов(а) отвлекаться от важных дел на собаку, она должна уметь занять себя,"
+                                       " если я занят(а)",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_5)
+
+    else:
+        new_message = bot.send_message(message.from_user.id,
+                                       'Я Вас не понимаю. Отвечаете только "Да" и "Нет"',
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_4)
 
 
 def question_5(message):
@@ -166,6 +203,9 @@ def question_5(message):
         rating["4"] = -1
         rating["8"] = -1
 
+        new_message = bot.send_message(message.from_user.id, "5) Я живу в квартире", reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_6)
+
     elif message.text == "Нет":
         if rating["6"] != -1:
             rating["6"] += 1
@@ -173,8 +213,15 @@ def question_5(message):
             rating["9"] += 1
         if rating["10"] != -1:
             rating["10"] += 1
-    new_message = bot.send_message(message.from_user.id, "5) Я живу в квартире", reply_markup=markup)
-    bot.register_next_step_handler(new_message, question_6)
+
+        new_message = bot.send_message(message.from_user.id, "5) Я живу в квартире", reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_6)
+
+    else:
+        new_message = bot.send_message(message.from_user.id,
+                                       'Я Вас не понимаю. Отвечаете только "Да" и "Нет"',
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_5)
 
 
 def question_6(message):
@@ -183,15 +230,26 @@ def question_6(message):
         rating["1"] = -1
         rating["10"] = -1
 
+        new_message = bot.send_message(message.from_user.id, "6) Я не готов(а) тратить по два часа в день"
+                                                             " на активные прогулки с собакой", reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_7)
+
     elif message.text == "Нет":
         if rating["4"] != -1:
             rating["4"] += 1
 
         if rating["9"] != -1:
             rating["9"] += 1
-    new_message = bot.send_message(message.from_user.id, "6) Я не готов(а) тратить по два часа в день"
-                                                         " на активные прогулки с собакой", reply_markup=markup)
-    bot.register_next_step_handler(new_message, question_7)
+
+        new_message = bot.send_message(message.from_user.id, "6) Я не готов(а) тратить по два часа в день"
+                                                             " на активные прогулки с собакой", reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_7)
+
+    else:
+        new_message = bot.send_message(message.from_user.id,
+                                       'Я Вас не понимаю. Отвечаете только "Да" и "Нет"',
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_6)
 
 
 def question_7(message):
@@ -203,14 +261,27 @@ def question_7(message):
         rating["6"] = -1
         rating["7"] = -1
 
+        new_message = bot.send_message(message.from_user.id, "7) Мне принципиально важно, "
+                                                             "чтоб собаку было легко обучить командам",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_8)
+
     elif message.text == "Нет":
         if rating["4"] != -1:
             rating["4"] += 1
         if rating["9"] != -1:
             rating["9"] += 1
-    new_message = bot.send_message(message.from_user.id, "7) Мне принципиально важно, "
-                                                         "чтоб собаку было легко обучить командам", reply_markup=markup)
-    bot.register_next_step_handler(new_message, question_8)
+
+        new_message = bot.send_message(message.from_user.id, "7) Мне принципиально важно, "
+                                                             "чтоб собаку было легко обучить командам",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_8)
+
+    else:
+        new_message = bot.send_message(message.from_user.id,
+                                       'Я Вас не понимаю. Отвечаете только "Да" и "Нет"',
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_7)
 
 
 def question_8(message):
@@ -218,12 +289,25 @@ def question_8(message):
     if message.text == "Да":
         rating["5"] = -1
 
+        new_message = bot.send_message(message.from_user.id,
+                                       "8) Я — контактный человек и хочу чтобы собака любила ласку",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_9)
+
     elif message.text == "Нет":
         if rating["6"] != -1:
             rating["6"] += 1
-    new_message = bot.send_message(message.from_user.id, "8) Я — контактный человек и хочу чтобы собака любила ласку",
-                                   reply_markup=markup)
-    bot.register_next_step_handler(new_message, question_9)
+
+        new_message = bot.send_message(message.from_user.id,
+                                       "8) Я — контактный человек и хочу чтобы собака любила ласку",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_9)
+
+    else:
+        new_message = bot.send_message(message.from_user.id,
+                                       'Я Вас не понимаю. Отвечаете только "Да" и "Нет"',
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_8)
 
 
 def question_9(message):
@@ -231,20 +315,33 @@ def question_9(message):
     if message.text == "Да":
         rating["5"] = -1
 
+        new_message = bot.send_message(message.from_user.id, "9) Я жду от собаки абсолютного послушания",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_10)
+
     elif message.text == "Нет":
         if rating["8"] != -1:
             rating["8"] += 1
 
-    new_message = bot.send_message(message.from_user.id, "9) Я жду от собаки абсолютного послушания",
-                                   reply_markup=markup)
-    bot.register_next_step_handler(new_message, question_10)
+        new_message = bot.send_message(message.from_user.id, "9) Я жду от собаки абсолютного послушания",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_10)
+
+    else:
+        new_message = bot.send_message(message.from_user.id,
+                                       'Я Вас не понимаю. Отвечаете только "Да" и "Нет"',
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_9)
 
 
 def question_10(message):
     global rating
     if message.text == "Да":
         rating["5"] = -1
-
+        new_message = bot.send_message(message.from_user.id, "10) Ко мне часто приходят с друзья и мне важно,"
+                                                             " чтоб собака была дружелюбна к другим людям",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_11)
     elif message.text == "Нет":
         if rating["1"] != -1:
             rating["1"] += 1
@@ -257,10 +354,16 @@ def question_10(message):
         if rating["10"] != -1:
             rating["10"] += 1
 
-    new_message = bot.send_message(message.from_user.id, "10) Ко мне часто приходят с друзья и мне важно,"
-                                                         " чтоб собака была дружелюбна к другим людям",
-                                   reply_markup=markup)
-    bot.register_next_step_handler(new_message, question_11)
+        new_message = bot.send_message(message.from_user.id, "10) Ко мне часто приходят с друзья и мне важно,"
+                                                             " чтоб собака была дружелюбна к другим людям",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_11)
+
+    else:
+        new_message = bot.send_message(message.from_user.id,
+                                       'Я Вас не понимаю. Отвечаете только "Да" и "Нет"',
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_10)
 
 
 def question_11(message):
@@ -270,18 +373,31 @@ def question_11(message):
         rating["7"] = -1
         rating["8"] = -1
 
+        new_message = bot.send_message(message.from_user.id, "11) Я хочу, "
+                                                             "чтобы моя собака демонстрировала высокие "
+                                                             "умственные способности и "
+                                                             "готов с ней заниматься для этого результата",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_12)
+
     elif message.text == "Нет":
         if rating["5"] != -1:
             rating["5"] += 1
         if rating["9"] != -1:
             rating["9"] += 1
 
-    new_message = bot.send_message(message.from_user.id, "11) Я хочу, "
-                                                         "чтобы моя собака демонстрировала высокие "
-                                                         "умственные способности и "
-                                                         "готов с ней заниматься для этого результата",
-                                   reply_markup=markup)
-    bot.register_next_step_handler(new_message, question_12)
+        new_message = bot.send_message(message.from_user.id, "11) Я хочу, "
+                                                             "чтобы моя собака демонстрировала высокие "
+                                                             "умственные способности и "
+                                                             "готов с ней заниматься для этого результата",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_12)
+
+    else:
+        new_message = bot.send_message(message.from_user.id,
+                                       'Я Вас не понимаю. Отвечаете только "Да" и "Нет"',
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_11)
 
 
 def question_12(message):
@@ -289,28 +405,51 @@ def question_12(message):
     if message.text == "Да":
         rating["5"] = -1
 
+        new_message = bot.send_message(message.from_user.id, "12) Я не готов постоянно бегать с собакой по ветеринарам,"
+                                                             " хочу взять породу с крепким здоровьем",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_13)
+
     elif message.text == "Нет":
         if rating["4"] != -1:
             rating["4"] += 1
         if rating["10"] != -1:
             rating["10"] += 1
 
-    new_message = bot.send_message(message.from_user.id, "12) Я не готов постоянно бегать с собакой по ветеринарам,"
-                                                         " хочу взять породу с крепким здоровьем",
-                                   reply_markup=markup)
-    bot.register_next_step_handler(new_message, question_13)
+        new_message = bot.send_message(message.from_user.id, "12) Я не готов постоянно бегать с собакой по ветеринарам,"
+                                                             " хочу взять породу с крепким здоровьем",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_13)
+
+    else:
+        new_message = bot.send_message(message.from_user.id,
+                                       'Я Вас не понимаю. Отвечаете только "Да" и "Нет"',
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_12)
 
 
 def question_13(message):
     global rating
     if message.text == "Да":
         rating["9"] = -1
+
+        new_message = bot.send_message(message.from_user.id, "13) Я люблю сёрфинг или просто предпочитаю отдых на воде",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_14)
+
     elif message.text == "Нет":
         if rating["5"] != -1:
             rating["5"] += 1
-    new_message = bot.send_message(message.from_user.id, "13) Я люблю сёрфинг или просто предпочитаю отдых на воде",
-                                   reply_markup=markup)
-    bot.register_next_step_handler(new_message, question_14)
+
+        new_message = bot.send_message(message.from_user.id, "13) Я люблю сёрфинг или просто предпочитаю отдых на воде",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_14)
+
+    else:
+        new_message = bot.send_message(message.from_user.id,
+                                       'Я Вас не понимаю. Отвечаете только "Да" и "Нет"',
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_13)
 
 
 def question_14(message):
@@ -319,9 +458,21 @@ def question_14(message):
         if rating["8"] != -1:
             rating["8"] += 1
 
-    new_message = bot.send_message(message.from_user.id, "14) Я хочу гордиться древним родом своей собаки",
-                                   reply_markup=markup)
-    bot.register_next_step_handler(new_message, question_15)
+        new_message = bot.send_message(message.from_user.id, "14) Я хочу гордиться древним родом своей собаки",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_15)
+
+    elif message.text == "Нет":
+
+        new_message = bot.send_message(message.from_user.id, "14) Я хочу гордиться древним родом своей собаки",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_15)
+
+    else:
+        new_message = bot.send_message(message.from_user.id,
+                                       'Я Вас не понимаю. Отвечаете только "Да" и "Нет"',
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_14)
 
 
 def question_15(message):
@@ -332,11 +483,24 @@ def question_15(message):
         if rating["10"] != -1:
             rating["10"] += 1
 
-    new_message = bot.send_message(message.from_user.id, "15) Я буду с пониманием относится к ревнивости "
-                                                         "и обидчивости моей собаки "
-                                                         "и стараться давать ей столько любви, сколько ей нужно:",
-                                   reply_markup=markup)
-    bot.register_next_step_handler(new_message, final)
+        new_message = bot.send_message(message.from_user.id, "15) Я буду с пониманием относится к ревнивости "
+                                                             "и обидчивости моей собаки "
+                                                             "и стараться давать ей столько любви, сколько ей нужно:",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, final)
+
+    elif message.text == "Нет":
+        new_message = bot.send_message(message.from_user.id, "15) Я буду с пониманием относится к ревнивости "
+                                                             "и обидчивости моей собаки "
+                                                             "и стараться давать ей столько любви, сколько ей нужно:",
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, final)
+
+    else:
+        new_message = bot.send_message(message.from_user.id,
+                                       'Я Вас не понимаю. Отвечаете только "Да" и "Нет"',
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, question_15)
 
 
 def final(message):
@@ -354,14 +518,31 @@ def final(message):
             rating["4"] += 1
         if rating["8"] != -1:
             rating["8"] += 1
-    for i in rating.items():
-        answer.append(i)
 
-    answer = sorted(answer, key=lambda x: x[1])[::-1]
-    bot.send_message(message.from_user.id, data[answer[0][0]]["text"], reply_markup=keyboard)
-    photo = open(f"Photos/{data[answer[0][0]]['photo_name']}", 'rb')
-    new_message = bot.send_photo(message.from_user.id, photo, reply_markup=keyboard)
-    bot.register_next_step_handler(new_message, start)
+        for i in rating.items():
+            answer.append(i)
+
+        answer = sorted(answer, key=lambda x: x[1])[::-1]
+        bot.send_message(message.from_user.id, data[answer[0][0]]["text"], reply_markup=keyboard)
+        photo = open(f"Photos/{data[answer[0][0]]['photo_name']}", 'rb')
+        new_message = bot.send_photo(message.from_user.id, photo, reply_markup=keyboard)
+        bot.register_next_step_handler(new_message, start)
+
+    elif message.text == "Нет":
+        for i in rating.items():
+            answer.append(i)
+
+        answer = sorted(answer, key=lambda x: x[1])[::-1]
+        bot.send_message(message.from_user.id, data[answer[0][0]]["text"], reply_markup=keyboard)
+        photo = open(f"Photos/{data[answer[0][0]]['photo_name']}", 'rb')
+        new_message = bot.send_photo(message.from_user.id, photo, reply_markup=keyboard)
+        bot.register_next_step_handler(new_message, start)
+
+    else:
+        new_message = bot.send_message(message.from_user.id,
+                                       'Я Вас не понимаю. Отвечаете только "Да" и "Нет"',
+                                       reply_markup=markup)
+        bot.register_next_step_handler(new_message, final)
 
 
 bot.polling()
